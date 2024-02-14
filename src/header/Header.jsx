@@ -1,0 +1,353 @@
+import React from 'react'
+import { useState, useEffect } from 'react';
+import logo from '../img/logo.png'
+import logomini from '../img/logomini.png'
+import '../style/style.css'
+import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Textarea, Typography } from "@material-tailwind/react";
+import { Form } from 'react-router-dom';
+
+const Header = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const toggleNavbar = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const [empresa, setEmpresa] = useState(false);
+    const [productos, setProductos] = useState(false);
+    const [servicios, setServicio] = useState(false);
+
+    const [open, setOpen] = useState(false);
+
+    return (
+        <div>
+            <nav className="py-2">
+                <div className="container mx-auto md:flex md:justify-between md:items-center ">
+
+                    {isMobile ?
+                        <div></div>
+                        :
+                        <div>
+                            <img src={logo} alt='logo' className='size-20 w-52' />
+                        </div>
+
+                    }
+
+
+                    <div className="md:hidden flex justify-between items-center">
+
+                        <div className="text-white">
+                            <img src={logomini} alt='logo' className='size-20 p-2' />
+                        </div>
+
+                        <button
+                            onClick={toggleNavbar}
+                            className="text-white focus:outline-none "
+                        >
+                            <svg
+                                className="h-8 w-8 bg-black"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="3"
+                                    d="M4 6h16M4 12h16m-7 6h7"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div className={`md:flex md:items-center ${isOpen ? 'block ' : 'hidden'} `} >
+
+                        <div className={`text-xl flex ${isOpen ? 'flex-col' : ''}  items-center justify-center`}>
+
+                            <a href='/' className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline">
+                                Inicio
+                            </a>
+
+                            <div className=" relative text-left ">
+                                <div href="/" onMouseEnter={() => setEmpresa(true)} onMouseLeave={() => setEmpresa(false)}
+                                    className="text-black hover:text-green-300 px-2 py-2 transition duration-300 hover:scale-110 cursor-pointer hover:underline"
+                                    id="options-menu"
+                                >
+                                    Empresa
+                                </div>
+                                {empresa && (
+                                    <div onMouseEnter={() => setEmpresa(true)} onMouseLeave={() => setEmpresa(false)} className="origin-top-right absolute -left-5 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                                        <div
+                                            className="py-2 fade"
+                                            role="menu"
+                                            aria-orientation="vertical"
+                                            aria-labelledby="options-menu"
+                                        >
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
+                                                role="menuitem"
+                                            >
+                                                Quienes somos
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
+                                                role="menuitem"
+                                            >
+                                                Vision
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
+                                                role="menuitem"
+                                            >
+                                                Mision
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
+                                                role="menuitem"
+                                            >
+                                                Objetivo de calidad
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
+                                                role="menuitem"
+                                            >
+                                                Reciclaje
+                                            </a>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="relative text-left">
+                                <div href="/" onMouseEnter={() => setServicio(true)} onMouseLeave={() => setServicio(false)}
+                                    className="text-black hover:text-green-300 px-2 py-2 transition duration-300 hover:scale-110 hover:underline z-0 cursor-pointer"
+                                    id="options-menu"
+                                >
+                                    Servicios
+                                </div>
+                                {servicios && (
+                                    <div onMouseEnter={() => setServicio(true)} onMouseLeave={() => setServicio(false)}
+                                        className="origin-top-right absolute md:-left-72 md:w-[40vw] w-60 -left-16 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
+                                    >
+                                        <div
+                                            className="py-2 md:flex md:flex-wrap md:justify-evenly md:items-center md:gap-3 "
+                                            role="menu"
+                                            aria-orientation="vertical"
+                                            aria-labelledby="options-menu"
+                                        >
+                                            <a
+                                                href="/"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Computadores a la medida
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Telefonia movil-voip
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Camara de seguridad y familiar
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Redes sociales
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                electricos
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Software educativo
+                                            </a>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="relative text-left">
+                                <div href="/" onMouseEnter={() => setProductos(true)} onMouseLeave={() => setProductos(false)}
+                                    className="text-black hover:text-green-300 px-2 py-2 transition duration-300 hover:scale-110 hover:underline z-0 cursor-pointer"
+                                    id="options-menu"
+                                >
+                                    Productos
+                                </div>
+                                {productos && (
+                                    <div onMouseEnter={() => setProductos(true)} onMouseLeave={() => setProductos(false)} className="origin-top-right absolute -left-16 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                                        <div
+                                            className="py-2"
+                                            role="menu"
+                                            aria-orientation="vertical"
+                                            aria-labelledby="options-menu"
+                                        >
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Computadores a la medida
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Telefonia movil-voip
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Camara de seguridad y familiar
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Redes sociales
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                electricos
+                                            </a>
+                                            <a
+                                                href="/"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem"
+                                            >
+                                                Software educativo
+                                            </a>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <a href="/"
+                                className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline">
+                                Tienda
+                            </a>
+
+                            <button
+                                onClick={() => setOpen(!open)}
+                                className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline"
+                            >Contactanos</button>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </nav>
+            <Message open={open} handler={() => setOpen(!open)} />
+        </div>
+    )
+}
+
+function Message(props) {
+
+    let id = 0
+    const [nombre, setNombre] = useState("")
+    const [telefono, setTelefono] = useState("")
+    const [email, setEmail] = useState("")
+    const [mensaje, setMensaje] = useState("")
+
+    const [info, setInfo] = useState([])
+
+    console.log(info)
+
+    return (
+        <Dialog {...props} size="md">
+            <div className="flex items-center justify-between">
+                <DialogHeader className="flex flex-col items-start">
+                    {" "}
+                    <Typography className="mb-1" variant="h4">
+                        New message to @{" "}
+                    </Typography>
+                </DialogHeader>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="mr-3 h-5 w-5"
+                    onClick={props.handler}
+                >
+                    <path
+                        fillRule="evenodd"
+                        d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                        clipRule="evenodd"
+                    />
+                </svg>
+            </div>
+            <DialogBody>
+                <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
+                    Write the message and then click button.
+                </Typography>
+                <div className="grid gap-6">
+                    <Typography className="-mb-1" color="blue-gray" variant="h6">
+                        Username
+                    </Typography>
+
+                    <Input value={nombre} onChange={(e) => setNombre(e.target.value)} type='text' label="Nombre completo" />
+                    <Input value={telefono} onChange={(e) => setTelefono(e.target.value)} type='number' label="Telefono" />
+                    <Input value={email} onChange={(e) => setEmail(e.target.value)} type='email' label="Correo Electronico" />
+                    <Textarea value={mensaje} onChange={(e) => setMensaje(e.target.value)} label="Message" />
+
+                </div>
+            </DialogBody>
+            <DialogFooter className="space-x-2">
+                <Button variant="text" color="gray" onClick={props.handler}>
+                    cancel
+                </Button>
+                <Button variant="gradient" color="gray" onClick={() => {
+                setInfo([...info, { id:id++, nombre:nombre, telefono:telefono, email:email, mensaje:mensaje}])}} >
+                    send message
+                </Button>
+            </DialogFooter>
+        </Dialog>
+    )
+}
+
+export default Header
