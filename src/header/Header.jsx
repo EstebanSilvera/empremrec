@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import logo from '../img/logo.png'
 import logomini from '../img/logomini.png'
 import '../style/style.css'
-import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Textarea, Typography } from "@material-tailwind/react";
-import { Form } from 'react-router-dom';
+import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Textarea, Typography, Rating, Alert } from "@material-tailwind/react";
+import axios from 'axios';
 
 const Header = () => {
 
@@ -33,6 +33,13 @@ const Header = () => {
     const [servicios, setServicio] = useState(false);
 
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/contact")
+            .then((response) => {
+                console.log(response.data);
+            });
+    }, [])
 
     return (
         <div>
@@ -288,23 +295,44 @@ const Header = () => {
 
 function Message(props) {
 
-    let id = 0
     const [nombre, setNombre] = useState("")
     const [telefono, setTelefono] = useState("")
     const [email, setEmail] = useState("")
     const [mensaje, setMensaje] = useState("")
+    const [puntaje, setPuntaje] = useState(4)
 
-    const [info, setInfo] = useState([])
+    const Guardar = () =>{
+        const con = [nombre,telefono,email,mensaje,puntaje]
+        const contact = con.filter((vacio) => vacio !== "")
+        console.log(contact)
+        if (contact.length != 5) {
+            alert("Por favor llenar todos los campos")
+        }else{
+            axios.post("http://localhost:3000/api/contact", {
+                name: nombre,
+                phone: telefono,
+                email: email,
+                message: mensaje,
+                score: puntaje,
+            })
+            .then((response) => {
+                console.log(response.data.message);
+                alert(response.data.message)
+                window.location.reload();
+            });
 
-    console.log(info)
+            
+        }
+
+    }
 
     return (
         <Dialog {...props} size="md">
             <div className="flex items-center justify-between">
                 <DialogHeader className="flex flex-col items-start">
                     {" "}
-                    <Typography className="mb-1" variant="h4">
-                        New message to @{" "}
+                    <Typography className="text-3xl" variant="h4">
+                        Quisieramos saber mas de ti!
                     </Typography>
                 </DialogHeader>
                 <svg
@@ -322,19 +350,27 @@ function Message(props) {
                 </svg>
             </div>
             <DialogBody>
-                <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-                    Write the message and then click button.
+                <Typography className="mb-5 -mt-7 text-md " color="gray" variant="lead">
+                    Nos encantaría conocer tu opinión sobre nuestra página.<br /> ¿Podrías darnos una puntuación y decirnos si necesitas algún asesoramiento?
                 </Typography>
                 <div className="grid gap-6">
                     <Typography className="-mb-1" color="blue-gray" variant="h6">
-                        Username
+                        Credenciales
                     </Typography>
 
-                    <Input value={nombre} onChange={(e) => setNombre(e.target.value)} type='text' label="Nombre completo" />
-                    <Input value={telefono} onChange={(e) => setTelefono(e.target.value)} type='number' label="Telefono" />
-                    <Input value={email} onChange={(e) => setEmail(e.target.value)} type='email' label="Correo Electronico" />
-                    <Textarea value={mensaje} onChange={(e) => setMensaje(e.target.value)} label="Message" />
+                    <Input value={nombre} onChange={(e) => setNombre(e.target.value)} type='text' label="Nombre completo" variant="standard"/>
+                    <Input value={telefono} onChange={(e) => setTelefono(e.target.value)} type='number' label="Telefono" variant="standard" />
+                    <Input value={email} onChange={(e) => setEmail(e.target.value)} type='email' label="Correo Electronico" variant="standard" />
 
+                    <Typography className="-mb-1" color="blue-gray" variant="h6">
+                        Puntuacion
+                    </Typography>
+
+                    <Textarea value={mensaje} onChange={(e) => setMensaje(e.target.value)} label="Message" />
+                    <div className='flex items-center'>
+                        <Rating className='pl-5' value={4} unratedColor="green" ratedColor="green" onChange={(value) => setPuntaje(value)} />
+                        <p className='text-xl px-2'>{puntaje}.0</p>
+                    </div>
                 </div>
             </DialogBody>
             <DialogFooter className="space-x-2">
@@ -342,7 +378,8 @@ function Message(props) {
                     cancel
                 </Button>
                 <Button variant="gradient" color="gray" onClick={() => {
-                setInfo([...info, { id:id++, nombre:nombre, telefono:telefono, email:email, mensaje:mensaje}])}} >
+                    Guardar(); 
+                }} >
                     send message
                 </Button>
             </DialogFooter>
