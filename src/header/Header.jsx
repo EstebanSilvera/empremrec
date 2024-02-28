@@ -319,7 +319,10 @@ function Message(props) {
                 console.log(response.data.message);
                 alert(response.data.message)
                 window.location.reload();
-            });
+            })
+            .catch((error) =>{
+                alert("Error en la para guardar, intentelo de nuevo o mas tarde", error)
+            })
 
             
         }

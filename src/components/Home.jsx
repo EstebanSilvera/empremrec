@@ -14,9 +14,9 @@ import mariana from '../img/mariana.png'
 import jose from '../img/jose.png'
 import wistin from '../img/wistin.png'
 import leyri from '../img/leyri.png'
-import { Card, CardHeader, CardBody, CardFooter, IconButton, SpeedDial, SpeedDialHandler, SpeedDialContent, SpeedDialAction } from "@material-tailwind/react";
+import { Card, CardHeader, CardBody, CardFooter, IconButton, SpeedDial, SpeedDialHandler, SpeedDialContent, SpeedDialAction, Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-import { FaWhatsapp, FaHome, FaPlus, FaUsers  } from "react-icons/fa";
+import { FaWhatsapp, FaHome, FaPlus, FaUsers } from "react-icons/fa";
 import { MdOutlineDiversity1 } from "react-icons/md";
 import { LuBrainCircuit } from "react-icons/lu";
 import { FaUsersGear, FaPuzzlePiece } from "react-icons/fa6";
@@ -34,6 +34,14 @@ import {
     DialogFooter,
 } from "@material-tailwind/react";
 
+import {
+    Timeline,
+    TimelineItem,
+    TimelineConnector,
+    TimelineHeader,
+    TimelineIcon,
+    TimelineBody,
+  } from "@material-tailwind/react";
 
 
 const Home = () => {
@@ -357,12 +365,11 @@ const Home = () => {
 
             <section>
 
-                <div className="md:h-[80vh] flex justify-center items-center bg-gray-100 py-5">
-                    <div className="relative w-4/5 md:h-[70vh] bg-white shadow-lg rounded-lg overflow-hidden flex justify-center items-center">
+                <div className="md:h-[80vh] flex justify-center items-center bg-gray-100">
+                    <div className="relative w-4/5 md:h-[70vh] bg-white  shadow-lg rounded-lg flex justify-center items-center">
 
                         <Swiper
-                            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-                            spaceBetween={20}
+                            modules={[Navigation, Pagination, Scrollbar, Autoplay]}
                             slidesPerView={3}
                             //navigation
                             autoplay={{ delay: 3000 }}
@@ -651,6 +658,82 @@ const Home = () => {
 }
 
 function Perfil(props) {
+    const data = [
+        {
+            label: "Dashboard",
+            value: "dashboard",
+            desc: (
+                <>
+                    <div className="w-[40rem]">
+                        <Timeline>
+                            <TimelineItem>
+                                <TimelineConnector />
+                                <TimelineHeader className="h-3">
+                                    <TimelineIcon />
+                                    <Typography variant="h6" className="leading-none">
+                                        Timeline Title Here.
+                                    </Typography>
+                                </TimelineHeader>
+                                <TimelineBody className="pb-8">
+                                    <Typography variant="small" className="font-normal text-gray-600">
+                                        The key to more success is to have a lot of pillows. Put it this way, it took me
+                                        twenty five years to get these plants, twenty five years of blood sweat and tears, and
+                                        I&apos;m never giving up, I&apos;m just getting started. I&apos;m up to something. Fan
+                                        luv.
+                                    </Typography>
+                                </TimelineBody>
+                            </TimelineItem>
+                            <TimelineItem>
+                                <TimelineConnector />
+                                <TimelineHeader className="h-3">
+                                    <TimelineIcon />
+                                    <Typography variant="h6" className="leading-none">
+                                        Timeline Title Here.
+                                    </Typography>
+                                </TimelineHeader>
+                                <TimelineBody className="pb-8">
+                                    <Typography variant="small" className="font-normal text-gray-600">
+                                        The key to more success is to have a lot of pillows. Put it this way, it took me
+                                        five years to get these plants, twenty five years of blood sweat and tears, and
+                                        luv.
+                                    </Typography>
+                                </TimelineBody>
+                            </TimelineItem>
+                            <TimelineItem>
+                                <TimelineHeader className="h-3">
+                                    <TimelineIcon />
+                                    <Typography variant="h6" className="leading-none">
+                                        Timeline Title Here.
+                                    </Typography>
+                                </TimelineHeader>
+                                <TimelineBody>
+                                    <Typography variant="small" className="font-normal text-gray-600">
+                                        The key to more success is to have a lot of pillows. Put it this way, it took me
+                                        twenty five years to get these plants, twenty five years of blood sweat and tears, and
+                                        I&apos;m never giving up, I&apos;m just getting started. I&apos;m up to something. Fan
+                                        luv.
+                                    </Typography>
+                                </TimelineBody>
+                            </TimelineItem>
+                        </Timeline>
+                    </div>
+                </>
+            )
+        },
+        {
+            label: "Profile",
+            value: "profile",
+            desc: `Because it's about motivating the doers. Because I'm here
+          to follow my dreams and inspire other people to follow their dreams, too.`,
+        },
+        {
+            label: "Settings",
+            value: "settings",
+            desc: `We're not always in the position that we want to be at.
+          We're constantly growing. We're constantly making mistakes. We're
+          constantly trying to express ourselves and actualize our dreams.`,
+        },
+    ];
     return (
         <Dialog
             {...props}
@@ -660,25 +743,42 @@ function Perfil(props) {
                 unmount: { scale: 0.9, y: -100 },
             }}
         >
-            <DialogHeader>{props.informacion.nombre}</DialogHeader>
-            <DialogBody>
-                {props.informacion.descripcion}
-                <img src={props.informacion.img} alt='imagen' />
+            {/* usa en tailwind con material el Tabs y Timeline(para su experiencia) */}
+            <DialogBody className='h-[70vh] overflow-scroll z-40'>
+                {/* donde dice ID="agregar una imagen de fondo" */}
+                <div id="img" className='bg-black -m-4'>
+                    <div className='relative top-12 left-8 rounded-full size-40 shadow-2xl shadow-green-100 z-50 border-2 border-white bg-green-100'>
+                        <img src={props.informacion.img} alt='img' className='relative bottom-14 z-50 rounded-full' style={{ height: "140%" }} />
+                    </div>
+                </div>
+
+                <div className='pt-20'>
+                    <h1 className='text-black text-2xl font-mono font-bold'>{props.informacion.nombre}</h1>
+                    <p>{props.informacion.descripcion}</p>
+
+                    <Tabs value="dashboard">
+                        <TabsHeader>
+                            {data.map(({ label, value, icon }) => (
+                                <Tab key={value} value={value}>
+                                    <div className="flex items-center gap-2">
+                                        {label}
+                                    </div>
+                                </Tab>
+                            ))}
+                        </TabsHeader>
+                        <TabsBody>
+                            {data.map(({ value, desc }) => (
+                                <TabPanel key={value} value={value}>
+                                    {desc}
+                                </TabPanel>
+                            ))}
+                        </TabsBody>
+                    </Tabs>
+                    <img className='rounded-full size-82' src={props.informacion.img} alt='imagen' />
+                    <img className='rounded-full size-82' src={props.informacion.img} alt='imagen' />
+                </div>
 
             </DialogBody>
-            <DialogFooter>
-                <Button
-                    variant="text"
-                    color="red"
-                    onClick={props.handler}
-                    className="mr-1"
-                >
-                    <span>Cancel</span>
-                </Button>
-                <Button variant="gradient" color="green" onClick={props.handler}>
-                    <span>Confirm</span>
-                </Button>
-            </DialogFooter>
         </Dialog>
     );
 }
