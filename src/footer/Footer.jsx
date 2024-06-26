@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-600 pt-4">
-          <p className="text-sm text-center">&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
+          <p className="text-sm text-center">&copy; {new Date().getFullYear()} Tu Empresa. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>

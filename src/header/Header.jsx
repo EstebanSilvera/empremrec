@@ -1,10 +1,10 @@
-import React from 'react'
 import { useState, useEffect } from 'react';
 import logo from '../img/logo.png'
 import logomini from '../img/logomini.png'
 import '../style/style.css'
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Textarea, Typography, Rating, Alert } from "@material-tailwind/react";
 import axios from 'axios';
+import { TbLayoutNavbarExpandFilled } from "react-icons/tb"
 
 const Header = () => {
 
@@ -34,27 +34,14 @@ const Header = () => {
 
     const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-        axios.get("http://localhost:3000/api/contact")
-            .then((response) => {
-                console.log(response.data);
-            });
-    }, [])
-
     return (
         <div>
-            <nav className="py-2">
+            <nav className="desvanecer fixed bg-transparent z-50 w-full py-2 ">
                 <div className="container mx-auto md:flex md:justify-between md:items-center ">
 
-                    {isMobile ?
-                        <div></div>
-                        :
-                        <div>
-                            <img src={logo} alt='logo' className='size-20 w-52' />
-                        </div>
-
-                    }
-
+                    <div className={`${!isMobile ? 'block ' : 'hidden'} `}>
+                        <img src={logo} alt='logo' className='size-20 w-52' />
+                    </div>
 
                     <div className="md:hidden flex justify-between items-center">
 
@@ -67,7 +54,7 @@ const Header = () => {
                             className="text-white focus:outline-none "
                         >
                             <svg
-                                className="h-8 w-8 bg-black"
+                                className="h-8 w-8 text-black"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -85,13 +72,13 @@ const Header = () => {
 
                     <div className={`md:flex md:items-center ${isOpen ? 'block ' : 'hidden'} `} >
 
-                        <div className={`text-xl flex ${isOpen ? 'flex-col' : ''}  items-center justify-center`}>
+                        <div className={`navbar text-xl flex ${isOpen ? 'flex-col' : ''}  items-center justify-center`}>
 
-                            <a href='/' className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline">
+                            <a href='/' className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline ">
                                 Inicio
                             </a>
 
-                            <div className=" relative text-left ">
+                            <div className=" relative text-left font-sans ">
                                 <div href="/" onMouseEnter={() => setEmpresa(true)} onMouseLeave={() => setEmpresa(false)}
                                     className="text-black hover:text-green-300 px-2 py-2 transition duration-300 hover:scale-110 cursor-pointer hover:underline"
                                     id="options-menu"
@@ -301,13 +288,13 @@ function Message(props) {
     const [mensaje, setMensaje] = useState("")
     const [puntaje, setPuntaje] = useState(4)
 
-    const Guardar = () =>{
-        const con = [nombre,telefono,email,mensaje,puntaje]
+    const Guardar = () => {
+        const con = [nombre, telefono, email, mensaje, puntaje]
         const contact = con.filter((vacio) => vacio !== "")
         console.log(contact)
         if (contact.length != 5) {
             alert("Por favor llenar todos los campos")
-        }else{
+        } else {
             axios.post("http://localhost:3000/api/contact", {
                 name: nombre,
                 phone: telefono,
@@ -315,16 +302,16 @@ function Message(props) {
                 message: mensaje,
                 score: puntaje,
             })
-            .then((response) => {
-                console.log(response.data.message);
-                alert(response.data.message)
-                window.location.reload();
-            })
-            .catch((error) =>{
-                alert("Error en la para guardar, intentelo de nuevo o mas tarde", error)
-            })
+                .then((response) => {
+                    console.log(response.data.message);
+                    alert(response.data.message)
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    alert("Error en la para guardar, intentelo de nuevo o mas tarde", error)
+                })
 
-            
+
         }
 
     }
@@ -339,10 +326,11 @@ function Message(props) {
                     </Typography>
                 </DialogHeader>
                 <svg
+
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="mr-3 h-5 w-5"
+                    className="mr-3 h-5 w-5 cursor-pointer"
                     onClick={props.handler}
                 >
                     <path
@@ -352,8 +340,9 @@ function Message(props) {
                     />
                 </svg>
             </div>
+            <hr />
             <DialogBody>
-                <Typography className="mb-5 -mt-7 text-md " color="gray" variant="lead">
+                <Typography className="mb-5 text-md " color="gray" variant="lead">
                     Nos encantaría conocer tu opinión sobre nuestra página.<br /> ¿Podrías darnos una puntuación y decirnos si necesitas algún asesoramiento?
                 </Typography>
                 <div className="grid gap-6">
@@ -361,7 +350,7 @@ function Message(props) {
                         Credenciales
                     </Typography>
 
-                    <Input value={nombre} onChange={(e) => setNombre(e.target.value)} type='text' label="Nombre completo" variant="standard"/>
+                    <Input value={nombre} onChange={(e) => setNombre(e.target.value)} type='text' label="Nombre completo" variant="standard" />
                     <Input value={telefono} onChange={(e) => setTelefono(e.target.value)} type='number' label="Telefono" variant="standard" />
                     <Input value={email} onChange={(e) => setEmail(e.target.value)} type='email' label="Correo Electronico" variant="standard" />
 
@@ -381,9 +370,9 @@ function Message(props) {
                     cancel
                 </Button>
                 <Button variant="gradient" color="gray" onClick={() => {
-                    Guardar(); 
+                    Guardar();
                 }} >
-                    send message
+                    Enviar datos
                 </Button>
             </DialogFooter>
         </Dialog>

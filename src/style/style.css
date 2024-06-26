@@ -1,0 +1,28 @@
+@media (min-width: 720px) {
+    .navbar {
+        font-size: larger;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 20px;
+        
+    }
+}
+
+@media (max-width: 720px) {
+    .navbar {
+        font-size: larger;
+        text-align: center;
+        margin: 0 20px 0 20px 
+    }
+}
+
+
+.desvanecer{
+    background: linear-gradient(to right, transparent 10% , white ,white,white);
+}
+
+.ver-mas{
+    max-height: 3vw;
+    overflow: hidden;
+}

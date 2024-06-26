@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '../img/logo.png'
 import logomini from '../img/logomini.png'
 import curvas from '../img/curvaHome2.png'
@@ -7,19 +7,13 @@ import quienes from '../img/quieneSomoss.jpg'
 import mision from '../img/mision.gif'
 import vision from '../img/vision.png'
 import arboles from '../img/arboles.jpg'
-import esteban from '../img/esteban.png'
-import karla from '../img/karla.png'
-import andres from '../img/andres.png'
-import mariana from '../img/mariana.png'
-import jose from '../img/jose.png'
-import wistin from '../img/wistin.png'
-import leyri from '../img/leyri.png'
-import { Card, CardHeader, CardBody, CardFooter, IconButton, SpeedDial, SpeedDialHandler, SpeedDialContent, SpeedDialAction, Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
+import { Card, CardHeader, CardBody, CardFooter, IconButton, SpeedDial, SpeedDialHandler, SpeedDialContent, SpeedDialAction, Tabs, TabsHeader, TabsBody, Tab, TabPanel, Avatar } from "@material-tailwind/react";
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-import { FaWhatsapp, FaHome, FaPlus, FaUsers } from "react-icons/fa";
+import { FaWhatsapp, FaHome, FaPlus, FaBriefcase  } from "react-icons/fa";
 import { MdOutlineDiversity1 } from "react-icons/md";
 import { LuBrainCircuit } from "react-icons/lu";
 import { FaUsersGear, FaPuzzlePiece } from "react-icons/fa6";
+import { FcBullish , FcBusinessman, FcInspection, FcPlanner  } from "react-icons/fc";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -27,13 +21,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
-import {
-    Dialog,
-    DialogHeader,
-    DialogBody,
-    DialogFooter,
-} from "@material-tailwind/react";
-
+import { Dialog, DialogBody } from "@material-tailwind/react";
+import axios from 'axios';
 import {
     Timeline,
     TimelineItem,
@@ -41,7 +30,8 @@ import {
     TimelineHeader,
     TimelineIcon,
     TimelineBody,
-  } from "@material-tailwind/react";
+} from "@material-tailwind/react";
+import { informacionPersonal } from '../core/Information';
 
 
 const Home = () => {
@@ -54,7 +44,6 @@ const Home = () => {
     };
 
 
-
     const [open, setOpen] = useState(false);
 
     const [informacion, setInformacion] = useState({
@@ -64,72 +53,52 @@ const Home = () => {
         nombre: ""
     });
 
+
     const perfil = (nom) => {
-        const nombre = document.getElementById(nom)
 
-        console.log(nombre.id)
+        const nombrefinal = informacionPersonal[nom]
 
-        switch (nombre.id !== "") {
-            case nombre.id === "esteban":
-                setInformacion({
-                    img: esteban,
-                    titulo: "Desarrollador",
-                    descripcion: "el mejor programando",
-                    nombre: "Esteban Silvera"
-                });
-                break;
-            case nombre.id === "andres":
-                setInformacion({
-                    img: andres,
-                    titulo: "Ingeniero Electrico",
-                    descripcion: "El mejor ingeniero electrico de colombia ",
-                    nombre: "Andres Noguera"
-                });
-                break;
-            case nombre.id === "jose":
-                setInformacion({
-                    img: jose,
-                    titulo: "Ingeniero Electrico",
-                    descripcion: "El mejor ingeniero electrico de colombia ",
-                    nombre: "Andres Noguera"
-                });
-                break;
-            case nombre.id === "karla":
-                setInformacion({
-                    img: karla,
-                    titulo: "Ingeniero Electrico",
-                    descripcion: "El mejor ingeniero electrico de colombia ",
-                    nombre: "Andres Noguera"
-                });
-                break;
-            case nombre.id === "justin":
-                setInformacion({
-                    img: wistin,
-                    titulo: "Ingeniero Electrico",
-                    descripcion: "El mejor ingeniero electrico de colombia ",
-                    nombre: "Andres Noguera"
-                });
-                break;
-            case nombre.id === "mariana":
-                setInformacion({
-                    img: mariana,
-                    titulo: "Ingeniero Electrico",
-                    descripcion: "El mejor ingeniero electrico de colombia ",
-                    nombre: "Andres Noguera"
-                });
-                break;
-            case nombre.id === "leyri":
-                setInformacion({
-                    img: leyri,
-                    titulo: "Ingeniero Electrico",
-                    descripcion: "El mejor ingeniero electrico de colombia ",
-                    nombre: "Andres Noguera"
-                });
-                break;
-            default:
-                console.log("prueba")
-        }
+        setInformacion({
+            img: nombrefinal.img,
+            titulo: nombrefinal.titulo,
+            descripcion: nombrefinal.descripcion,
+            nombre: nombrefinal.nombre
+        });
+
+        console.log(nombrefinal)
+
     }
+
+    const [coment, setComent] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/contact")
+            .then((response) => {
+                setComent(response.data);
+            })
+            .catch((error) => {
+                console.error("Problemas con traer la informacion ", error)
+            });
+    }, [])
+
+    const [expanded, setExpanded] = useState(false);
+    const [expanded2, setExpanded2] = useState(false);
+
+    const toggleExpanded = () => {
+        setExpanded(!expanded);
+        setExpanded2(!expanded2);
+    };
+
+    const textVerMas = {
+        overflow: 'hidden',
+        transition: 'max-height 0.5s ease-out',
+        maxHeight: expanded ? '1000px' : '50px', // Cambia aquí el maxHeight según el estado
+    };
+    const textVerMas2 = {
+        overflow: 'hidden',
+        transition: 'max-height 0.5s ease-out',
+        maxHeight: expanded2 ? '1000px' : '50px', // Cambia aquí el maxHeight según el estado
+    };
 
     return (
         <div>
@@ -147,7 +116,7 @@ const Home = () => {
                             <Typography {...labelProps}>Home</Typography>
                         </SpeedDialAction>
                         <SpeedDialAction className="relative">
-                            <FaWhatsapp className="h-5 w-5" />
+                            <FaPlus className="h-5 w-5" />
                             <Typography {...labelProps}>Settings</Typography>
                         </SpeedDialAction>
                         <SpeedDialAction className="relative">
@@ -160,7 +129,7 @@ const Home = () => {
 
             {/* **************************************************************************************************************************** */}
             <Carousel transition={{ duration: 2 }}>
-                <div className="relative h-full w-full">
+                <div className="relative h-full w-full ">
                     <img
                         src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
                         alt="image1"
@@ -318,46 +287,66 @@ const Home = () => {
             <div className='flex flex-wrap justify-center items-center py-10'>
 
                 <Card className="m-6 py-4 shadow-2xl shadow-black hover:-translate-y-1 hover:bg-green-100 duration-300 animate__backInRight" style={{ width: "80vh" }}>
-                    <CardHeader color="blue-gray" className="relative h-56">
+                    <CardHeader color="blue-gray" className="relative h-64">
                         <img
-                            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                            src="https://www.ceupe.pe/images/easyblog_articles/241/b2ap3_large_foto.jpg"
                             alt="card-image"
                         />
                     </CardHeader>
                     <CardBody>
                         <Typography variant="h5" color="blue-gray" className="mb-2">
-                            UI/UX Review Check
+                            Los Beneficios de la Energía Solar: Una Fuente Inagotable y Sostenible
                         </Typography>
-                        <Typography>
-                            The place is close to Barceloneta Beach and bus stop just 2 min by
-                            walk and near to &quot;Naviglio&quot; where you can enjoy the main
-                            night life in Barcelona.
+                        <Typography style={textVerMas}>
+                            La energía solar se ha convertido en una de las fuentes de energía renovable más prometedoras y accesibles del siglo XXI.
+                            Aprovechando la luz del sol, esta forma de energía no solo es inagotable, sino también amigable con el medio ambiente,
+                            ya que su uso no genera emisiones de gases de efecto invernadero. Además, la energía solar reduce la dependencia de los combustibles
+                            fósiles y puede disminuir significativamente los costos energéticos a largo plazo. Con la tecnología solar en constante evolución,
+                            los paneles solares se están volviendo más eficientes y asequibles, lo que facilita su adopción tanto a nivel residencial como industrial,
+                            contribuyendo así a un futuro más limpio y sostenible.
                         </Typography>
                     </CardBody>
-                    <CardFooter className="pt-0">
-                        <Button>Read More</Button>
+                    <CardFooter className="pt-0" onClick={() => setExpanded(!expanded)}>
+                        {expanded ? <Button>Ver menos</Button> : <Button>Ver mas...</Button>}
                     </CardFooter>
                 </Card>
 
                 <Card className="m-6 py-4 shadow-2xl shadow-black hover:-translate-y-1 hover:bg-green-100 duration-300" style={{ width: "80vh" }}>
-                    <CardHeader color="blue-gray" className="relative h-56">
+                    <CardHeader color="blue-gray" className="relative h-64">
                         <img
-                            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                            className=''
+                            src="https://concepto.de/wp-content/uploads/2018/09/pagina-web1-e1537371844166.jpg"
                             alt="card-image"
                         />
                     </CardHeader>
                     <CardBody>
                         <Typography variant="h5" color="blue-gray" className="mb-2">
-                            UI/UX Review Check
+                            ¿Es necesario una pagina web para tu Empresa o Emprendimiento?
                         </Typography>
-                        <Typography>
-                            The place is close to Barceloneta Beach and bus stop just 2 min by
-                            walk and near to &quot;Naviglio&quot; where you can enjoy the main
-                            night life in Barcelona.
+                        <Typography style={textVerMas2}>
+                            En la era digital actual, tener una página web para tu empresa o emprendimiento no es solo una opción, sino una necesidad fundamental.
+                            Una página web actúa como tu tarjeta de presentación en línea, ofreciendo a potenciales clientes y socios una primera impresión crucial de tu negocio.
+                            Aquí te explico algunas de las razones más importantes por las que necesitas una página web: <br /> <br />
+
+                            <h2>1. Visibilidad y Alcance Global</h2>
+                            <p>Una página web te permite estar disponible para cualquier persona, en cualquier lugar del mundo, las 24 horas del día. Esto amplía significativamente tu alcance y potencial de crecimiento.</p>
+                            <br /> 
+                            <h2>2. Credibilidad y Profesionalismo</h2>
+                            <p>Tener una página web bien diseñada y actualizada aumenta la credibilidad de tu negocio. Los clientes potenciales tienden a confiar más en una empresa que tiene presencia en línea, lo que puede ser un factor decisivo al elegir entre competidores.</p>
+                            <br /> 
+                            <h2>3. Marketing y Publicidad Efectiva</h2>
+                            <p>A través de tu página web, puedes implementar diversas estrategias de marketing digital, como SEO (optimización para motores de búsqueda), publicidad pagada, y marketing de contenidos. Estas estrategias son mucho más efectivas y económicas que los métodos tradicionales de publicidad.</p>
+                            <br /> 
+                            <h2>4. Interacción y Servicio al Cliente</h2>
+                            <p>Una página web permite una comunicación más fluida con tus clientes. Puedes incluir secciones de preguntas frecuentes, chat en vivo, formularios de contacto y más, facilitando así la atención al cliente y mejorando su experiencia.</p>
+                            <br /> 
+                            <h2>5. Ventas y Comercio Electrónico</h2>
+                            <p>Si vendes productos o servicios, una página web te permite establecer una tienda en línea, lo que puede incrementar tus ventas significativamente. Además, facilita las transacciones y ofrece una plataforma segura para que tus clientes compren directamente desde la comodidad de su hogar.</p>
+                
                         </Typography>
                     </CardBody>
-                    <CardFooter className="pt-0">
-                        <Button>Read More</Button>
+                    <CardFooter className="pt-0" onClick={() => setExpanded2(!expanded2)}>
+                        {expanded2 ? <Button>Ver menos</Button> : <Button>Ver mas...</Button>}
                     </CardFooter>
                 </Card>
 
@@ -387,9 +376,9 @@ const Home = () => {
                             }}
                         >
                             <SwiperSlide >
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-green-100 z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={esteban} alt='img' className='relative bottom-20 z-50 rounded-full' style={{ height: "140%" }} />
+                                        <img src={informacionPersonal.esteban.img} alt='img' className='relative bottom-20 z-50 rounded-full' style={{ height: "140%" }} />
                                     </div>
                                     <h1 className='text-2xl' id='esteban'>Esteban Silvera</h1>
                                     <h3 className='text-md text-red-500 '>Desarrollador de software</h3>
@@ -400,9 +389,9 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide >
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-green-100 z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={andres} alt='img' className='relative bottom-20 z-50 rounded-full' style={{ height: "140%" }} />
+                                        <img src={informacionPersonal.andres.img} alt='img' className='relative bottom-20 z-50 rounded-full' style={{ height: "140%" }} />
                                     </div>
                                     <h1 className='text-2xl ' id='andres'><strong>Andres Noguera</strong></h1>
                                     <h3 className='text-md text-red-500 '>Ingeniero electrico</h3>
@@ -413,9 +402,9 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide >
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-green-100 z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={jose} alt='img' className='relative bottom-20 w-96 z-50 rounded-full' style={{ height: "140%" }} />
+                                        <img src={informacionPersonal.jose.img} alt='img' className='relative bottom-20 w-96 z-50 rounded-full' style={{ height: "140%" }} />
                                     </div>
                                     <h1 className='text-2xl' id='jose'><strong>Jose Silvera</strong></h1>
                                     <h3 className='text-md text-red-500 '>Ingeniero Ambiental</h3>
@@ -426,9 +415,9 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide >
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-green-100 z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={karla} alt='img' className='relative bottom-10 z-50 w-96 rounded-full' style={{ height: "120%" }} />
+                                        <img src={informacionPersonal.karla.img} alt='img' className='relative bottom-10 z-50 w-96 rounded-full' style={{ height: "120%" }} />
                                     </div>
                                     <h1 className='text-2xl' id='karla'><strong>karla Rodriguez</strong></h1>
                                     <h3 className='text-md text-red-500 '>nutricionista Dietista</h3>
@@ -439,9 +428,9 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-white z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={wistin} alt='img' className='relative bottom-10 w-96 z-50 rounded-full' style={{ height: "120%" }} />
+                                        <img src={informacionPersonal.justin.img} alt='img' className='relative bottom-10 w-96 z-50 rounded-full' style={{ height: "120%" }} />
                                     </div>
                                     <h1 className='text-2xl' id='justin'><strong>Justin Imitola</strong></h1>
                                     <h3 className='text-md text-red-500 '>Ingeniero Indrustrial</h3>
@@ -452,9 +441,9 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-white z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={mariana} alt='img' className='relative bottom-20 w-96 z-50 rounded-full' style={{ height: "140%" }} />
+                                        <img src={informacionPersonal.mariana.img} alt='img' className='relative bottom-20 w-96 z-50 rounded-full' style={{ height: "140%" }} />
                                     </div>
                                     <h1 className='text-2xl' id='mariana'><strong>Mariana Rodriguez</strong></h1>
                                     <h3 className='text-md text-red-500'>Fisioterapeuta</h3>
@@ -465,9 +454,9 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10'>
+                                <div className='bg-white rounded-3xl mx-auto text-center px-6 py-10 cursor-default'>
                                     <div className='rounded-full size-52 mx-auto shadow-2xl shadow-white z-0 border-2 border-white bg-green-100 m-4'>
-                                        <img src={leyri} alt='img' className='relative bottom-10 w-96 z-50 rounded-full' style={{ height: "120%" }} />
+                                        <img src={informacionPersonal.leyri.img} alt='img' className='relative bottom-10 w-96 z-50 rounded-full' style={{ height: "120%" }} />
                                     </div>
                                     <h1 className='text-2xl' id='leyri'><strong>Leyri Scaldaferro</strong></h1>
                                     <h3 className='text-md text-red-500 '>Psicologa</h3>
@@ -623,32 +612,77 @@ const Home = () => {
 
             </section>
 
-            <section className='h-[100%] py-20 shadow-inner flex justify-center items-center' style={{ backgroundImage: `url(${arboles})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
+            <section className='py-20 shadow-inner' style={{ backgroundImage: `url(${arboles})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
 
-                <div className='mx-auto md:flex md:justify-center md:items-center'>
+                <div className='mx-auto flex flex-wrap justify-center items-center'>
 
-                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center'>
-                        <FaWhatsapp className='size-20' />
-                        <h1>10.000</h1>
-                        <h3>prueba</h3>
+                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
+                        <FcBusinessman className='size-20' />
+                        <h1 className='text-3xl font-bold'>10.000+</h1>
+                        <h3>Clientes</h3>
                     </div>
-                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center'>
-                        <FaWhatsapp className='size-20' />
-                        <h1>10.000</h1>
-                        <h3>prueba</h3>
+                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
+                        <FcInspection className='size-20' />
+                        <h1 className='text-3xl font-bold'>500+</h1>
+                        <h3>Proyectos completados</h3>
                     </div>
-                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center'>
-                        <FaUsers className='size-20' />
-                        <h1>10.000</h1>
-                        <h3>prueba</h3>
+                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
+                        <FcPlanner  className='size-20' />
+                        <h1 className='text-3xl font-bold'>2</h1>
+                        <h3>Años en el mercado</h3>
                     </div>
-                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center'>
-                        <FaWhatsapp className='size-20' />
-                        <h1>10.000</h1>
-                        <h3>prueba</h3>
+                    <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
+                        <FcBullish   className='size-20' />
+                        <h1 className='text-3xl font-bold'>25.000+</h1>
+                        <h3>Visitas al mes</h3>
                     </div>
 
                 </div>
+
+            </section>
+
+            <section>
+                {
+                    coment.map((value, index) => {
+                        (
+
+                            <Card color="transparent" shadow={false} className="w-full max-w-[26rem]">
+                                <CardHeader
+                                    color="transparent"
+                                    floated={false}
+                                    shadow={false}
+                                    className="mx-0 flex items-center gap-4 pt-0 pb-8"
+                                >
+                                    <Avatar
+                                        size="lg"
+                                        variant="circular"
+                                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                                        alt="tania andrew"
+                                    />
+                                    <div className="flex w-full flex-col gap-0.5">
+                                        <div className="flex items-center justify-between">
+                                            <Typography variant="h5" color="blue-gray">
+                                                Tania Andrew
+                                            </Typography>
+                                            <div className="5 flex items-center gap-0">
+
+                                            </div>
+                                        </div>
+                                        <Typography color="blue-gray">Frontend Lead @ Google</Typography>
+                                    </div>
+                                </CardHeader>
+                                <CardBody className="mb-6 p-0">
+                                    <Typography>
+                                        &quot;I found solution to all my design needs from Creative Tim. I use
+                                        them as a freelancer in my hobby projects for fun! And its really
+                                        affordable, very humble guys !!!&quot;
+                                    </Typography>
+                                </CardBody>
+                            </Card>
+
+                        )
+                    })
+                }
 
             </section>
 
@@ -734,6 +768,7 @@ function Perfil(props) {
           constantly trying to express ourselves and actualize our dreams.`,
         },
     ];
+
     return (
         <Dialog
             {...props}
@@ -744,7 +779,7 @@ function Perfil(props) {
             }}
         >
             {/* usa en tailwind con material el Tabs y Timeline(para su experiencia) */}
-            <DialogBody className='h-[70vh] overflow-scroll z-40'>
+            <DialogBody className='h-[70vh] overflow-auto z-40'>
                 {/* donde dice ID="agregar una imagen de fondo" */}
                 <div id="img" className='bg-black -m-4'>
                     <div className='relative top-12 left-8 rounded-full size-40 shadow-2xl shadow-green-100 z-50 border-2 border-white bg-green-100'>
@@ -774,8 +809,6 @@ function Perfil(props) {
                             ))}
                         </TabsBody>
                     </Tabs>
-                    <img className='rounded-full size-82' src={props.informacion.img} alt='imagen' />
-                    <img className='rounded-full size-82' src={props.informacion.img} alt='imagen' />
                 </div>
 
             </DialogBody>
