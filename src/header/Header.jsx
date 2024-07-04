@@ -4,16 +4,15 @@ import logomini from '../img/logomini.png'
 import '../style/style.css'
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input, Textarea, Typography, Rating, Alert } from "@material-tailwind/react";
 import axios from 'axios';
-import { TbLayoutNavbarExpandFilled } from "react-icons/tb"
 
 const Header = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 720);
 
     const handleResize = () => {
-        setIsMobile(window.innerWidth <= 768);
+        setIsMobile(window.innerWidth <= 720);
     };
 
     useEffect(() => {
@@ -43,7 +42,7 @@ const Header = () => {
                         <img src={logo} alt='logo' className='size-20 w-52' />
                     </div>
 
-                    <div className="md:hidden flex justify-between items-center">
+                    <div className="md:hidden flex justify-between items-center mx-10">
 
                         <div className="text-white">
                             <img src={logomini} alt='logo' className='size-20 p-2' />
@@ -72,7 +71,7 @@ const Header = () => {
 
                     <div className={`md:flex md:items-center ${isOpen ? 'block ' : 'hidden'} `} >
 
-                        <div className={`navbar text-xl flex ${isOpen ? 'flex-col' : ''}  items-center justify-center`}>
+                        <div className={` text-xl flex mx-auto ${isMobile ? 'flex-col ' : ''}  items-center justify-center`}>
 
                             <a href='/' className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline ">
                                 Inicio
@@ -132,7 +131,7 @@ const Header = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="relative text-left">
+                            <div className="relative text-left font-sans">
                                 <div href="/" onMouseEnter={() => setServicio(true)} onMouseLeave={() => setServicio(false)}
                                     className="text-black hover:text-green-300 px-2 py-2 transition duration-300 hover:scale-110 hover:underline z-0 cursor-pointer"
                                     id="options-menu"
@@ -141,52 +140,52 @@ const Header = () => {
                                 </div>
                                 {servicios && (
                                     <div onMouseEnter={() => setServicio(true)} onMouseLeave={() => setServicio(false)}
-                                        className="origin-top-right absolute md:-left-72 md:w-[40vw] w-60 -left-16 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
+                                        className="absolute md:-left-[10vh] md:w-[30vh] w-60 -left-16 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 "
                                     >
                                         <div
-                                            className="py-2 md:flex md:flex-wrap md:justify-evenly md:items-center md:gap-3 "
+                                            className="py-2 fade"
                                             role="menu"
                                             aria-orientation="vertical"
                                             aria-labelledby="options-menu"
                                         >
                                             <a
                                                 href="/"
-                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Computadores a la medida
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Telefonia movil-voip
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Camara de seguridad y familiar
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Redes sociales
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 electricos
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-8 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Software educativo
@@ -213,42 +212,42 @@ const Header = () => {
                                         >
                                             <a
                                                 href="/"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Computadores a la medida
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Telefonia movil-voip
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Camara de seguridad y familiar
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Redes sociales
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 electricos
                                             </a>
                                             <a
                                                 href="/"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
                                                 role="menuitem"
                                             >
                                                 Software educativo
@@ -263,10 +262,12 @@ const Header = () => {
                                 Tienda
                             </a>
 
-                            <button
-                                onClick={() => setOpen(!open)}
-                                className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline"
-                            >Contactanos</button>
+                            <div>
+                                <button
+                                    onClick={() => setOpen(!open)}
+                                    className="text-black hover:text-green-300 px-2 py-2 transition duration-300 ease-in-out hover:scale-110 hover:underline"
+                                >Contactanos</button>
+                            </div>
 
 
                         </div>

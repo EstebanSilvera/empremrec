@@ -9,11 +9,11 @@ import vision from '../img/vision.png'
 import arboles from '../img/arboles.jpg'
 import { Card, CardHeader, CardBody, CardFooter, IconButton, SpeedDial, SpeedDialHandler, SpeedDialContent, SpeedDialAction, Tabs, TabsHeader, TabsBody, Tab, TabPanel, Avatar } from "@material-tailwind/react";
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-import { FaWhatsapp, FaHome, FaPlus, FaBriefcase  } from "react-icons/fa";
+import { FaWhatsapp, FaHome, FaPlus, FaBriefcase } from "react-icons/fa";
 import { MdOutlineDiversity1 } from "react-icons/md";
 import { LuBrainCircuit } from "react-icons/lu";
 import { FaUsersGear, FaPuzzlePiece } from "react-icons/fa6";
-import { FcBullish , FcBusinessman, FcInspection, FcPlanner  } from "react-icons/fc";
+import { FcBullish, FcBusinessman, FcInspection, FcPlanner } from "react-icons/fc";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -50,7 +50,8 @@ const Home = () => {
         img: "",
         titulo: "",
         descripcion: "",
-        nombre: ""
+        nombre: "",
+        experiencias: ""
     });
 
 
@@ -58,14 +59,9 @@ const Home = () => {
 
         const nombrefinal = informacionPersonal[nom]
 
-        setInformacion({
-            img: nombrefinal.img,
-            titulo: nombrefinal.titulo,
-            descripcion: nombrefinal.descripcion,
-            nombre: nombrefinal.nombre
-        });
+        setInformacion(nombrefinal);
 
-        console.log(nombrefinal)
+        // console.log(nombrefinal)
 
     }
 
@@ -83,11 +79,6 @@ const Home = () => {
 
     const [expanded, setExpanded] = useState(false);
     const [expanded2, setExpanded2] = useState(false);
-
-    const toggleExpanded = () => {
-        setExpanded(!expanded);
-        setExpanded2(!expanded2);
-    };
 
     const textVerMas = {
         overflow: 'hidden',
@@ -120,8 +111,10 @@ const Home = () => {
                             <Typography {...labelProps}>Settings</Typography>
                         </SpeedDialAction>
                         <SpeedDialAction className="relative">
-                            <FaWhatsapp className="h-5 w-5" />
-                            <Typography {...labelProps}>Pages</Typography>
+                            <a href="https://wa.me/+573013144857">
+                                <FaWhatsapp className="h-5 w-5" />
+                                <Typography {...labelProps}>WhatsApp</Typography>
+                            </a>
                         </SpeedDialAction>
                     </SpeedDialContent>
                 </SpeedDial>
@@ -241,12 +234,12 @@ const Home = () => {
                     </div>
                 </div>
             </Carousel>
-            <img src={curvas} alt='' className='relative w-full -top-10' style={{ transform: "scaleX(-1)" }} />
+            <img src={curvas} alt='' className='relative w-full h-[6vh] -top-[5vh]' style={{ transform: "scaleX(-1)" }} />
             {/* **************************************************************************************************************************** */}
 
 
             <div className='py-10'>
-                <h1 className='text-center text-3xl font-bold py-6'>¿Por que elegir EMPREMREC?</h1>
+                <h1 className='text-center text-3xl font-bold py-6'>¿Por que elegir esta empresa?</h1>
 
                 <div className='flex justify-evenly items-center rounded-xl shadow-2xl hover:shadow-green-500 duration-300 container mx-auto my-8'>
 
@@ -330,19 +323,19 @@ const Home = () => {
 
                             <h2>1. Visibilidad y Alcance Global</h2>
                             <p>Una página web te permite estar disponible para cualquier persona, en cualquier lugar del mundo, las 24 horas del día. Esto amplía significativamente tu alcance y potencial de crecimiento.</p>
-                            <br /> 
+                            <br />
                             <h2>2. Credibilidad y Profesionalismo</h2>
                             <p>Tener una página web bien diseñada y actualizada aumenta la credibilidad de tu negocio. Los clientes potenciales tienden a confiar más en una empresa que tiene presencia en línea, lo que puede ser un factor decisivo al elegir entre competidores.</p>
-                            <br /> 
+                            <br />
                             <h2>3. Marketing y Publicidad Efectiva</h2>
                             <p>A través de tu página web, puedes implementar diversas estrategias de marketing digital, como SEO (optimización para motores de búsqueda), publicidad pagada, y marketing de contenidos. Estas estrategias son mucho más efectivas y económicas que los métodos tradicionales de publicidad.</p>
-                            <br /> 
+                            <br />
                             <h2>4. Interacción y Servicio al Cliente</h2>
                             <p>Una página web permite una comunicación más fluida con tus clientes. Puedes incluir secciones de preguntas frecuentes, chat en vivo, formularios de contacto y más, facilitando así la atención al cliente y mejorando su experiencia.</p>
-                            <br /> 
+                            <br />
                             <h2>5. Ventas y Comercio Electrónico</h2>
                             <p>Si vendes productos o servicios, una página web te permite establecer una tienda en línea, lo que puede incrementar tus ventas significativamente. Además, facilita las transacciones y ofrece una plataforma segura para que tus clientes compren directamente desde la comodidad de su hogar.</p>
-                
+
                         </Typography>
                     </CardBody>
                     <CardFooter className="pt-0" onClick={() => setExpanded2(!expanded2)}>
@@ -500,32 +493,38 @@ const Home = () => {
                 >
                     <SwiperSlide >
                         <div className='bg-white h-64 rounded-3xl flex justify-center items-center'>
-                            <img src={logo} alt='logo' className='size-40' />
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStMlYzKNqzvbon9SgJsY8zND3cB05CKR6T8A&s"
+                                alt='logo' className='size-40 w-[25vh] rounded-xl shadow-2xl shadow-blue-200' />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide >
                         <div className='bg-white h-64 rounded-3xl flex justify-center items-center'>
-                            <img src={logomini} alt='logo' className='size-40 mx-auto' />
+                            <img src="https://imgmedia.larepublica.pe/640x371/larepublica/original/2024/02/06/65c22ebb5bad6a53597d3a81.webp"
+                                alt='logo' className='size-40 w-[25vh] rounded-xl shadow-2xl shadow-blue-200' />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide >
                         <div className='bg-white h-64 rounded-3xl flex justify-center items-center'>
-                            <img src={logomini} alt='logo' className='size-40 mx-auto' />
+                            <img src="https://www.nivianhome.com/wp-content/uploads/2017/10/Camaras-e1650452764201.jpg"
+                                alt='logo' className='size-40 w-[25vh] rounded-xl shadow-2xl shadow-blue-200' />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className='bg-white h-64 rounded-3xl flex justify-center items-center'>
-                            <img src={logo} alt='logo' className='size-40 mx-auto' />
+                            <img src="https://brainfoodmkt.com/wp-content/uploads/2021/07/tipos-de-paginas-web.png"
+                                alt='logo' className='size-40 w-[25vh] rounded-xl shadow-2xl shadow-blue-200' />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className='bg-white h-64 rounded-3xl flex justify-center items-center'>
-                            <img src={logo} alt='logo' className='size-40 mx-auto' />
+                            <img src="https://www.gob.mx/cms/uploads/article/main_image/116285/AlimentacionSaludable.jpg"
+                                alt='logo' className='size-40 w-[25vh] rounded-xl shadow-2xl shadow-blue-200' />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className='bg-white h-64 rounded-3xl flex justify-center items-center'>
-                            <img src={logo} alt='logo' className='size-40 mx-auto' />
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFDLxH9bh1SEE3Ze4ZaZJSQvkqBhUursOhkg&s"
+                                alt='logo' className='size-40 w-[25vh] rounded-xl shadow-2xl shadow-blue-200' />
                         </div>
                     </SwiperSlide>
 
@@ -618,22 +617,22 @@ const Home = () => {
 
                     <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
                         <FcBusinessman className='size-20' />
-                        <h1 className='text-3xl font-bold'>10.000+</h1>
+                        <h1 className='text-3xl font-bold'>100+</h1>
                         <h3>Clientes</h3>
                     </div>
                     <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
                         <FcInspection className='size-20' />
-                        <h1 className='text-3xl font-bold'>500+</h1>
-                        <h3>Proyectos completados</h3>
+                        <h1 className='text-3xl font-bold'>20+</h1>
+                        <h3>Proyectos</h3>
                     </div>
                     <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
-                        <FcPlanner  className='size-20' />
+                        <FcPlanner className='size-20' />
                         <h1 className='text-3xl font-bold'>2</h1>
                         <h3>Años en el mercado</h3>
                     </div>
                     <div className='w-56 h-56 rounded-full bg-white border-dashed border-2 border-green-500 mx-4 flex flex-col justify-center items-center my-2'>
-                        <FcBullish   className='size-20' />
-                        <h1 className='text-3xl font-bold'>25.000+</h1>
+                        <FcBullish className='size-20' />
+                        <h1 className='text-3xl font-bold'>2.500+</h1>
                         <h3>Visitas al mes</h3>
                     </div>
 
@@ -768,6 +767,8 @@ function Perfil(props) {
           constantly trying to express ourselves and actualize our dreams.`,
         },
     ];
+
+    console.log([props.informacion.experiencias])
 
     return (
         <Dialog
